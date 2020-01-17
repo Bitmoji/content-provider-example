@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Share" />
+
+    <com.bitstrips.example.contentproviderdemo.views.StickerView
+        android:id="@+id/share_sticker_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:sticker_uri="content://com.bitstrips.imoji.provider/me/sticker/226f7dd6-4492-4b15-a933-6722ba74a0f7" />
+
+    <Button
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share to SMS"
+        />
+
+    <com.bitstrips.example.contentproviderdemo.views.StickerView
+        android:id="@+id/share_animated_sticker_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:sticker_uri="content://com.bitstrips.imoji.provider/me/sticker/ani-3cc57b71-afa9-41a0-8397-4813ef4bfb4c" />
+
+    <Button
+        android:id="@+id/share_animated_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share to SMS"
+        />
+
+</LinearLayout>
