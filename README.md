@@ -377,17 +377,3 @@ Each entry in the Visual Identity library can be access directly.
 **URI:** `content://com.bitstrips.imoji.provider/me/library/{name}`
 
 **Returns:** An image or *null* if an error occurs.
-
-## Modifiers
-
-### Image format
-
-Every Bitmoji image URI allows a `image_format` query parameter that allows for customization.
-
-* Possible values: `png|webp`
-* Default: `png`
-
-Examples:
-
-* `content://com.bitstrips.imoji.provider/me?image_format=png`
-* `content://com.bitstrips.imoji.provider/me?image_format=webp`
