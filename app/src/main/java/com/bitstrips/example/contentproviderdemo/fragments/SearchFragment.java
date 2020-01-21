@@ -1,11 +1,6 @@
 package com.bitstrips.example.contentproviderdemo.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +11,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bitstrips.example.contentproviderdemo.R;
 import com.bitstrips.example.contentproviderdemo.adpater.StickersAdapter;
 import com.bitstrips.example.contentproviderdemo.model.Language;
 import com.bitstrips.example.contentproviderdemo.query.SearchTask;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 public class SearchFragment extends Fragment {
+
+    private final Executor EXECUTOR = Executors.newFixedThreadPool(4);
 
     private static final int COLUMN_COUNT = 3;
 
@@ -71,6 +76,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void search(@NonNull String text) {
-        new SearchTask(getContext(), text, mLocaleString, mAdapter::setImageUris).execute();
+        new SearchTask(getContext(), text, mLocaleString, mAdapter::setImageUris).executeOnExecutor(EXECUTOR);
     }
 }

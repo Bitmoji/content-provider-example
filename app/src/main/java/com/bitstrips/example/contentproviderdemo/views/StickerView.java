@@ -1,5 +1,8 @@
 package com.bitstrips.example.contentproviderdemo.views;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.ImageDecoder;
@@ -8,8 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,13 @@ import android.widget.TextView;
 
 import com.bitstrips.example.contentproviderdemo.R;
 import com.bitstrips.example.contentproviderdemo.executor.ExecutorUtils;
+import com.bitstrips.example.contentproviderdemo.glide.GlideApp;
 
 import java.io.IOException;
 
 public class StickerView extends LinearLayout {
+
+    private static final boolean USE_GLIDE = true;
 
     private ImageView mImageView;
     private TextView mTextView;
@@ -55,7 +59,14 @@ public class StickerView extends LinearLayout {
     }
 
     public void setStickerUri(@NonNull Uri uri) {
-        loadContentUri(uri);
+        if (USE_GLIDE) {
+            GlideApp.with(getContext())
+                    .asDrawable()
+                    .load(uri)
+                    .into(mImageView);
+        } else {
+            loadContentUri(uri);
+        }
 
         mStickerUri = uri;
         mTextView.setText(uri.toString());

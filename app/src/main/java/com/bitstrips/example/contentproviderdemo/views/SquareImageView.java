@@ -1,7 +1,8 @@
 package com.bitstrips.example.contentproviderdemo.views;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 public class SquareImageView extends AppCompatImageView {

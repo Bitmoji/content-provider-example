@@ -1,11 +1,11 @@
 package com.bitstrips.example.contentproviderdemo.viewholder;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import com.bitstrips.example.contentproviderdemo.R;
 import com.bitstrips.example.contentproviderdemo.views.StickerView;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 public class StickerViewHolder extends RecyclerView.ViewHolder {

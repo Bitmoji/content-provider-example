@@ -1,7 +1,8 @@
 package com.bitstrips.example.contentproviderdemo.model;
 
+import androidx.annotation.Nullable;
+
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
 
 public enum Language {

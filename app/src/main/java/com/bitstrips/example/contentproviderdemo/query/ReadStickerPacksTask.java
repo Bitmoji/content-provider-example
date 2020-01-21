@@ -1,12 +1,12 @@
 package com.bitstrips.example.contentproviderdemo.query;
 
+import androidx.annotation.NonNull;
 import com.bitstrips.example.contentproviderdemo.model.StickerPack;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
