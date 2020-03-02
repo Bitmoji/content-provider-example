@@ -35,6 +35,65 @@ All the URIs must be prefixed with our content provider authority: **`com.bitstr
 
 A list of all the available URIs is detailed next.
 
+### Status
+
+**URI:** `content://com.bitstrips.imoji.provider/status`
+
+**Returns:** The state of content provider with respect to the calling app defined by their `status` property.
+
+Value|Description
+-----|-----------
+`NO_ACCESS`|The calling app has not been granted access to the content provider. See `Requesting Access`.
+`NO_AVATAR`|The calling app has been granted access, there is no Bitmoji Avatar available. The user must open the Bitmoji app to login and/or create an Avatar.
+`READY`|The content provider is ready for use.
+
+This URI can be used determine whether the app has access to the content provider. Depending on the return value the app can take appropriate actions to establish access to the content content provider.
+
+##### Example Code
+
+```java
+Uri uri = new Uri.Builder()
+       .scheme(ContentResolver.SCHEME_CONTENT)
+       .authority("com.bitstrips.imoji.provider")
+       .appendPath("status")
+       .build();
+
+Cursor cursor = getContext()
+       .getContentResolver()
+       .query(uri, null, null, null, null);
+
+if (cursor == null || !cursor.moveToNext()) {
+   // Update or install the Bitmoji App
+}
+
+String status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
+
+// Do something with `status` here
+```
+
+##### Requesting Access
+
+To request access to the content provider the app can launch an intent which is handled by the Bitmoji app. In this process the user will be presented with a dialog asking for their consent for content provider access.
+
+```java
+private void requestAccess() {
+    startActivityForResult(
+          new Intent(Intent.ACTION_VIEW)
+              .setData(Uri.parse("imoji://content-provider/connected-apps")), 1);
+}
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    if (requestCode == 1) {
+        if (resultCode == RESULT_OK) {
+            // The request for access to the content provider has been granted
+        } else {
+            // The request for access to the content provider has been rejected
+        }
+    }
+}
+```
+
 ### Selfie
 
 **URI:** `content://com.bitstrips.imoji.provider/me`
@@ -117,7 +176,7 @@ Uri uri = new Uri.Builder()
 Cursor cursor = getContext()
        .getContentResolver()
        .query(uri, null, null, null, null);
-       
+
 if (cursor == null) {
    // Handle this case
 }
@@ -250,65 +309,6 @@ Row: 1 uri=content://com.bitstrips.imoji.provider/me/sticker/e596af3d-3d39-45e3-
 Row: 2 uri=content://com.bitstrips.imoji.provider/me/sticker/016be1c2-8190-4e5c-b8b1-9b71b912c9f4, text=NULL, is_animated=0
 ```
 
-### Status
-
-**URI:** `content://com.bitstrips.imoji.provider/status`
-
-**Returns:** The state of content provider with respect to the calling app defined by their `status` property.
-
-Value|Description
------|-----------
-`NO_ACCESS`|The calling app has not been granted access to the content provider. See `Requesting Access`.
-`NO_AVATAR`|The calling app has been granted access, there is no Bitmoji Avatar available. The user must open the Bitmoji app to login and/or create an Avatar.
-`READY`|The content provider is ready for use.
-
-This URI can be used determine whether the app has access to the content provider. Depending on the return value the app can take appropriate actions to establish access to the content content provider.
-
-##### Example Code
-
-```java
-Uri uri = new Uri.Builder()
-       .scheme(ContentResolver.SCHEME_CONTENT)
-       .authority("com.bitstrips.imoji.provider")
-       .appendPath("status")
-       .build();
-
-Cursor cursor = getContext()
-       .getContentResolver()
-       .query(uri, null, null, null, null);
-       
-if (cursor == null || !cursor.moveToNext()) {
-   // Update or install the Bitmoji App
-}
-
-String status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
-
-// Do something with `status` here
-```
-
-##### Requesting Access
-
-To request access to the content provider the app can launch an intent which is handled by the Bitmoji app. In this process the user will be presented with a dialog asking for their consent for content provider access.
-
-```java
-private void requestAccess() {
-    startActivityForResult(
-          new Intent(Intent.ACTION_VIEW)
-              .setData(Uri.parse("imoji://content-provider/connected-apps")), 1);
-}
-
-@Override
-protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    if (requestCode == 1) {
-        if (resultCode == RESULT_OK) {
-            // The request for access to the content provider has been granted
-        } else {
-            // The request for access to the content provider has been rejected
-        }
-    }
-}
-```
-
 ## Sharing
 
 To share stickers to other apps, the app must use the `share_to` method. This allows the other app to access an individual sticker URI without requiring that app to have access to the entire Bitmoji app content provider.
@@ -337,7 +337,7 @@ Uri shareableUri = context.getContentResolver().insert(stickerUri, values);
 
 ## Notifications
 
-It is common for users to update or change their Avatar within the Bitmoji app. A subscription to notifications on the Selfie URI enables the app to recieve notifications for Avatar changes. Notifications will be sent whenever the Avatar or sticker content has changed, including signing into and logging out of the Bitmoji App. 
+It is common for users to update or change their Avatar within the Bitmoji app. A subscription to notifications on the Selfie URI enables the app to recieve notifications for Avatar changes. Notifications will be sent whenever the Avatar or sticker content has changed, including signing into and logging out of the Bitmoji App.
 
 The notification is only sent to the Selfie URI, but implies that content for all sticker URIs has changed.
 
