@@ -15,7 +15,7 @@ Bitmoji Android App must be installed.
 
 A user with a Bitmoji Avatar must be signed into the app in order for successful Content Provider operation.
 
-Developer Mode must be enabled to use the Content Provider for development purposes. To enable Developer Mode, enter the Settings screen and tap on the version string 4 times.
+Developer Mode must be enabled to use the Content Provider for development purposes. To enable Developer Mode, enter the Settings screen and tap on the title 4 times.
 
 The Bitmoji Android App requires that enough disk storage is available to maintain image caches. Content Provider functionality requires at least 50MB of available disk storage.
 
